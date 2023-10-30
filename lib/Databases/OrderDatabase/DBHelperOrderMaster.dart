@@ -25,24 +25,7 @@ class DBHelperOrderMaster{
     return db;
   }
   _onCreate(Database db, int version){
-    db.execute("CREATE TABLE orderMaster (orderId TEXT PRIMARY KEY AUTOINCREMENT ,shopName TEXT,ownerName TEXT,phoneNo TEXT,brand TEXT)");
-  }
-
-
-  Future<Object> getMasterTable() async {
-    final Database db = await initDatabase();
-    try {
-      var results = await db.rawQuery("SELECT * FROM orderMaster ");
-      if (results.isNotEmpty) {
-        return results;
-      } else {
-        print("No rows found in the 'owner' table.");
-        return false;
-      }
-    } catch (e) {
-      print("Error retrieving product: $e");
-      return false;
-    }
+    db.execute("CREATE TABLE orderMaster (id TEXT PRIMARY KEY,shopName TEXT,ownerName TEXT,phoneNo TEXT,brand TEXT)");
   }
 }
 

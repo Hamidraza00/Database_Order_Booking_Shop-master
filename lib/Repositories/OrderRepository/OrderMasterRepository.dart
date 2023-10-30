@@ -9,7 +9,7 @@ class OrderMasterRepository{
 
   Future<List<OrderMasterModel>> getOrderMaster() async{
     var dbClient = await dbHelperOrderMaster.db;
-    List<Map> maps = await dbClient.query('orderMaster',columns: ['orderId','shopName','ownerName','phoneNo','brand']);
+    List<Map> maps = await dbClient.query('orderMaster',columns: ['id','shopName','ownerName','phoneNo','brand']);
     List<OrderMasterModel> ordermaster = [];
     for(int i = 0; i<maps.length; i++)
     {
@@ -23,17 +23,17 @@ class OrderMasterRepository{
     return await dbClient.insert('orderMaster', ordermaster.toMap());
   }
 
-  // Future<int> update(OrderMasterModel ordermaster) async{
-  //   var dbClient = await dbHelperOrderMaster.db;
-  //   return await dbClient.update('orderMaster', ordermaster.toMap(),
-  //       where: 'id = ?', whereArgs: [ordermaster.Id]);
-  // }
+  Future<int> update(OrderMasterModel ordermaster) async{
+    var dbClient = await dbHelperOrderMaster.db;
+    return await dbClient.update('orderMaster', ordermaster.toMap(),
+        where: 'id = ?', whereArgs: [ordermaster.id]);
+  }
 
 
-  Future<int> delete(int orderId) async{
+  Future<int> delete(int id) async{
     var dbClient = await dbHelperOrderMaster.db;
     return await dbClient.delete('orderMaster',
-        where: 'id = ?', whereArgs: [orderId]);
+        where: 'id = ?', whereArgs: [id]);
   }
 
 

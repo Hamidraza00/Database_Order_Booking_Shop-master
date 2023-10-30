@@ -23,11 +23,11 @@ class OrderMasterViewModel extends GetxController{
     ordermasterRepository.add(ordermasterModel);
     fetchAllOrderMaster();
   }
-  //
-  // updateOrderMaster(OrderMasterModel ordermasterModel){
-  //   ordermasterRepository.update(ordermasterModel);
-  //   fetchAllOrderMaster();
-  // }
+
+  updateOrderMaster(OrderMasterModel ordermasterModel){
+    ordermasterRepository.update(ordermasterModel);
+    fetchAllOrderMaster();
+  }
 
   deleteOrderMaster(int id){
     ordermasterRepository.delete(id);

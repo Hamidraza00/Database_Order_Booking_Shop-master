@@ -9,7 +9,7 @@ class ProductsRepository{
 
   Future<List<ProductsModel>> getProductsModel() async{
     var dbClient = await dbHelperProducts.db;
-    List<Map> maps = await dbClient.query('products',columns: ['productCode','productName','uom','price','quantity']);
+    List<Map> maps = await dbClient.query(tableName2,columns: ['productCode','productName','uom','price','quantity']);
     List<ProductsModel> products = [];
     for(int i = 0; i<maps.length; i++)
     {
@@ -20,12 +20,12 @@ class ProductsRepository{
 
   Future<int> add(ProductsModel productsModel) async{
     var dbClient = await dbHelperProducts.db;
-    return await dbClient.insert('products', productsModel.toMap());
+    return await dbClient.insert(tableName4, productsModel.toMap());
   }
 
   Future<int> update(ProductsModel productsModel) async{
     var dbClient = await dbHelperProducts.db;
-    return await dbClient.update('products', productsModel.toMap(),
+    return await dbClient.update(tableName4, productsModel.toMap(),
         where: 'productCode = ?', whereArgs: [productsModel.productCode]);
   }
 

@@ -1,10 +1,7 @@
 
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
-import 'package:http/http.dart';
 
-import '../Databases/OrderDatabase/DBHelperOrderMaster.dart';
 import '../Models/OrderModels/OrderMasterModel.dart';
 import '../View_Models/OrderViewModels/OrderDetailsViewModel.dart';
 import '../View_Models/OrderViewModels/OrderMasterViewModel.dart';
@@ -45,55 +42,8 @@ class _NewOrderBookingPageState extends State<NewOrderBookingPage> {
   List<String> selectedDropdownValues = [];
   Map<String, int> itemQuantities = {};
   List<String> dropdownItems = [];
-  var data;
-  final db= DBHelperOrderMaster();
 
 
-  getMasterTableData() async{
-    var productData = await db.getMasterTable();
-    if (productData != null) {
-      data = productData;
-      int a=0;
-      for(var i in data){
-        a++;
-        var result=await postMasterTableData(i["orderId"].toString(),i["shopName"].toString(),i["ownerName"].toString(),i["phoneNo"].toString(),i["brand"].toString());
-        if(result==true){
-          Fluttertoast.showToast(msg: i["orderId"].toString(), toastLength: Toast.LENGTH_SHORT);
-        }
-        else{
-          Fluttertoast.showToast(msg: i["orderId"].toString(), toastLength: Toast.LENGTH_SHORT);
-        }
-      }
-
-    } else {
-      data = "No product found.";
-    }
-  }
-  postMasterTableData <bool> (String id, String shop_name, String owner_name, String phone_no, String brand) async{
-    try {
-      var response = await post(
-          Uri.parse('https://g04d40198f41624-i0czh1rzrnvg0r4l.adb.me-dubai-1.oraclecloudapps.com/ords/courage/ordermaster/post '),
-          body: {
-            'orderId' : id,
-            'shopName' : shop_name,
-            'ownerName' : owner_name,
-            'phoneNo':phone_no,
-            'brand': brand
-          }
-      );
-      print(response.statusCode);
-      if(response.statusCode==200){
-        return true;
-      }
-      else{
-        return false;
-      }
-    }
-    catch(e){
-      print("error ${e.toString()}");
-      return false;
-    }
-  }
   @override
   Widget build(BuildContext context) {
   return Scaffold(
@@ -116,14 +66,14 @@ class _NewOrderBookingPageState extends State<NewOrderBookingPage> {
   Align(
   alignment: Alignment.center,
   child: ElevatedButton(
-  onPressed: () async{
+  onPressed: (){
     if (shopNameController.text != "") {
       ordermasterViewModel.addOrderMaster(OrderMasterModel(
-       orderId: ordermasterId,
+        id: ordermasterId,
         shopName: shopNameController.text,
         ownerName: ownerNameController.text,
         phoneNo: phoneNoController.text,
-        brand:  brandController.text ,
+        brand:  brandController.text,
       ));
 
       shopNameController.text = "";
@@ -134,19 +84,11 @@ class _NewOrderBookingPageState extends State<NewOrderBookingPage> {
       phoneNoController.text = "";
      brandController.text="";
 
-
-
-
-
-
-
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (context) => OrderMasterList(savedOrderMasterData: ordermasterViewModel.allOrderMaster),
         ),
       );
-
-      await getMasterTableData();
     }
   },
   style: ButtonStyle(

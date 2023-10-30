@@ -29,19 +29,19 @@ class _OrderMasterListState extends State<OrderMasterList> {
 
 
 
-  // void _deleteOrderMaster(int index) async {
-  //   final ordermaster = _ordermasterList[index];
-  //
-  //   // Delete the shop from the database.
-  //   final deletedRows = await OrderMasterRepository().delete(ordermaster.orderId!);
-  //
-  //   if (deletedRows > 0) {
-  //     // If the delete operation was successful in the database, update the UI.
-  //     setState(() {
-  //       _ordermasterList.removeAt(index);
-  //     });
-  //   }
-  // }
+  void _deleteOrderMaster(int index) async {
+    final ordermaster = _ordermasterList[index];
+
+    // Delete the shop from the database.
+    final deletedRows = await OrderMasterRepository().delete(ordermaster.id!);
+
+    if (deletedRows > 0) {
+      // If the delete operation was successful in the database, update the UI.
+      setState(() {
+        _ordermasterList.removeAt(index);
+      });
+    }
+  }
 
 
   @override
@@ -61,7 +61,7 @@ class _OrderMasterListState extends State<OrderMasterList> {
             trailing: IconButton(
               icon: Icon(Icons.delete),
               onPressed: () {
-              //  _deleteOrderMaster(index);
+                _deleteOrderMaster(index);
               },
             ),
             onTap: () {

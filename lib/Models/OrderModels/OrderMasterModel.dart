@@ -1,15 +1,13 @@
 
-import 'dart:ffi';
-
 class OrderMasterModel {
-  int? orderId;
+  int? id;
   String? shopName;
   String? ownerName;
   String? phoneNo;
   String? brand;
 
   OrderMasterModel({
-   required this.orderId,
+    this.id,
     this.shopName,
     this.ownerName,
     this.phoneNo,
@@ -18,7 +16,7 @@ class OrderMasterModel {
 
   factory OrderMasterModel.fromMap(Map<dynamic, dynamic> json) {
     return OrderMasterModel(
-      orderId: json['orderId'],
+      id: json['id'],
       shopName: json['shopName'],
       ownerName: json['ownerName'],
       phoneNo: json['phoneNo'],
@@ -28,7 +26,7 @@ class OrderMasterModel {
 
   Map<String, dynamic> toMap() {
     return {
-      'orderId': orderId,
+      'id': id,
       'shopName': shopName,
       'ownerName': ownerName,
       'phoneNo': phoneNo,
